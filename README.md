@@ -1,2 +1,4 @@
-# se2a4_s8_projet_cmo
-Projet du cours de conception et modélisation objet
+# SE2A4 | Semestre n°8 - Projet conception & modélisation objet
+
+## Auteur
+Kevin Doolaeghe
