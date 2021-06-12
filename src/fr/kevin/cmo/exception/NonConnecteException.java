@@ -1,4 +1,4 @@
-package fr.kevin.exception;
+package fr.kevin.cmo.exception;
 
 public class NonConnecteException extends Exception {
 

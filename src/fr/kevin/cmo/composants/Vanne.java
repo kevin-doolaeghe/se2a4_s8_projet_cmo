@@ -1,6 +1,7 @@
-package fr.kevin.component;
+package fr.kevin.cmo.composants;
 
-import fr.kevin.exception.NonConnecteException;
+import fr.kevin.cmo.exception.NonConnecteException;
+import fr.kevin.cmo.signaux.SignalLogique;
 
 public class Vanne extends Composant {
 
@@ -46,4 +47,8 @@ public class Vanne extends Composant {
         return this.hashCode();
     }
 
+    @Override
+    public SignalLogique evaluate() {
+        return in.evaluate();
+    }
 }

@@ -1,4 +1,4 @@
-package fr.kevin.component;
+package fr.kevin.cmo.composants;
 
 public abstract class Porte2Entrees extends Porte {
 

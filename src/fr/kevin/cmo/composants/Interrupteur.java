@@ -1,17 +1,20 @@
-package fr.kevin.component;
+package fr.kevin.cmo.composants;
 
-import fr.kevin.exception.NonConnecteException;
+import fr.kevin.cmo.exception.NonConnecteException;
+import fr.kevin.cmo.signaux.SignalBas;
+import fr.kevin.cmo.signaux.SignalHaut;
+import fr.kevin.cmo.signaux.SignalLogique;
 
 public class Interrupteur extends Composant {
 
-    protected boolean etat;
+    protected SignalLogique etat;
 
     public void on() {
-        etat = true;
+        etat = new SignalHaut();
     }
 
     public void off() {
-        etat = false;
+        etat = new SignalBas();
     }
 
     @Override
@@ -26,12 +29,17 @@ public class Interrupteur extends Composant {
 
     @Override
     public boolean getEtat() throws NonConnecteException {
-        return etat;
+        return etat.value();
     }
 
     @Override
     public int compareTo(Object o) {
         return this.hashCode();
+    }
+
+    @Override
+    public SignalLogique evaluate() {
+        return etat;
     }
 
 }

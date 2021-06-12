@@ -1,7 +1,7 @@
-package fr.kevin.test;
+package fr.kevin.cmo.test;
 
-import fr.kevin.component.And;
-import fr.kevin.component.Not;
+import fr.kevin.cmo.composants.And;
+import fr.kevin.cmo.composants.Not;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

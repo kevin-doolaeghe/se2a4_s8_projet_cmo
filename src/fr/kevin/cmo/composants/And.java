@@ -1,19 +1,20 @@
-package fr.kevin.component;
+package fr.kevin.cmo.composants;
 
-import fr.kevin.exception.NonConnecteException;
+import fr.kevin.cmo.exception.NonConnecteException;
+import fr.kevin.cmo.signaux.SignalLogique;
 
-public class Or extends Porte2Entrees {
+public class And extends Porte2Entrees {
 
-    public Or() { }
+    public And() { }
 
-    public Or(Composant in1, Composant in2) {
+    public And(Composant in1, Composant in2) {
         setIn1(in1);
         setIn2(in2);
     }
 
     @Override
     public String getId() {
-        return "Or@" + this.hashCode();
+        return "And@" + this.hashCode();
     }
 
     @Override
@@ -28,12 +29,17 @@ public class Or extends Porte2Entrees {
         if (getIn1() == null || getIn2() == null) {
             throw new NonConnecteException();
         }
-        return getIn1().getEtat() || getIn2().getEtat();
+        return getIn1().getEtat() && getIn2().getEtat();
     }
 
     @Override
     public int compareTo(Object o) {
         return this.hashCode();
+    }
+
+    @Override
+    public SignalLogique evaluate() {
+        return getIn1().evaluate().and(getIn2().evaluate());
     }
 
 }

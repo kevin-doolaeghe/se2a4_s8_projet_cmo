@@ -1,27 +1,27 @@
-package fr.kevin.test;
+package fr.kevin.cmo.test;
 
-import fr.kevin.component.Or;
+import fr.kevin.cmo.composants.And;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.*;
 
-public class OrTest {
+public class AndTest {
 
-    private Or or;
+    private And and;
 
-    public OrTest() {
+    public AndTest() {
         setup();
     }
 
     @BeforeEach
     private void setup() {
-        or = new Or();
+        and = new And();
     }
 
     @Test
     public void creation() {
-        assertEquals("Or@" + or.hashCode(), or.getId());
+        assertEquals("And@" + and.hashCode(), and.getId());
     }
 
 }
