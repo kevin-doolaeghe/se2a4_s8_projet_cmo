@@ -9,6 +9,10 @@ public class Interrupteur extends Composant {
 
     protected SignalLogique etat;
 
+    public Interrupteur() {
+        off();
+    }
+
     public void on() {
         etat = new SignalHaut();
     }
@@ -28,13 +32,8 @@ public class Interrupteur extends Composant {
     }
 
     @Override
-    public boolean getEtat() throws NonConnecteException {
+    public boolean getEtat() {
         return etat.value();
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        return this.hashCode();
     }
 
     @Override

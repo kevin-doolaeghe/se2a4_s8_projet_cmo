@@ -5,39 +5,38 @@ import fr.kevin.cmo.composants.Interrupteur;
 import fr.kevin.cmo.composants.Vanne;
 import fr.kevin.cmo.exception.NonConnecteException;
 import fr.kevin.cmo.signaux.Evaluable;
+import fr.kevin.cmo.signaux.SignalBas;
 import fr.kevin.cmo.signaux.SignalLogique;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Circuit implements Evaluable {
 
-    List<Composant> composants;
+    private List<Composant> composants;
 
     private String nom;
 
     public Circuit(String nom, Composant[] cps) {
-        composants = Arrays.asList(cps);
-        Collections.sort(composants);
         this.nom = nom;
+        composants = new ArrayList<>();
+        composants.addAll(Arrays.asList(cps));
+        Collections.sort(composants);
     }
 
     public List<String> nomenclature() {
-        List<String> liste = new ArrayList<>();
-        for (Composant c : composants)
-            liste.add(c.getId());
-        return liste;
+        return composants.stream().map(c -> c.getId()).collect(Collectors.toList());
     }
 
     public void description() {
         System.out.println(this.nom + ":");
-        for (Composant c : composants)
-            System.out.println("\t-" + c.description());
+        composants.forEach(c -> System.out.println("\t-" + c.description()));
     }
 
     public void traceEtats() {
         System.out.println(this.nom + ":");
         for (Composant composant : composants) {
-            System.out.print("\t- " + composant + " ");
+            System.out.print("\t- " + composant.getId() + " ");
             try {
                 System.out.println(composant.getEtat());
             } catch (NonConnecteException e) {
@@ -47,21 +46,13 @@ public class Circuit implements Evaluable {
     }
 
     public List<Interrupteur> getInputs() {
-        List<Interrupteur> liste = new ArrayList<>();
-        for (Composant c : composants) {
-            if ((c.getId().split("@"))[0].compareTo("Interrupteur") == 0)
-                liste.add((Interrupteur) c);
-        }
-        return liste;
+        List<Composant> res = new CircuitFilter(this).filtrerComposants("Interrupteur");
+        return res.stream().map(c -> (Interrupteur) c).collect(Collectors.toList());
     }
 
     public List<Vanne> getOutputs() {
-        List<Vanne> liste = new ArrayList<>();
-        for (Composant c : composants) {
-            if ((c.getId().split("@"))[0].compareTo("Vanne") == 0)
-                liste.add((Vanne) c);
-        }
-        return liste;
+        List<Composant> res = new CircuitFilter(this).filtrerComposants("Vanne");
+        return res.stream().map(c -> (Vanne) c).collect(Collectors.toList());
     }
 
     public String getNom() {
@@ -72,13 +63,21 @@ public class Circuit implements Evaluable {
         this.nom = nom;
     }
 
+    public List<Composant> getComposants() {
+        return composants;
+    }
+
+    public void setComposants(List<Composant> composants) {
+        this.composants = composants;
+    }
+
     @Override
     public SignalLogique evaluate() {
-        List<Vanne> liste = getOutputs();
-        List<SignalLogique> signaux = new ArrayList<>();
-        for (Vanne vanne : liste)
-            signaux.add(vanne.evaluate());
-        return signaux.get(0);
+        try {
+            return getOutputs().stream().map(v -> v.evaluate()).collect(Collectors.toList()).get(0);
+        } catch (IndexOutOfBoundsException e) {
+            return new SignalBas();
+        }
     }
 
 }

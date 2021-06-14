@@ -1,6 +1,7 @@
 package fr.kevin.cmo.composants;
 
 import fr.kevin.cmo.exception.NonConnecteException;
+import fr.kevin.cmo.signaux.SignalBas;
 import fr.kevin.cmo.signaux.SignalLogique;
 
 public class And extends Porte2Entrees {
@@ -26,20 +27,20 @@ public class And extends Porte2Entrees {
 
     @Override
     public boolean getEtat() throws NonConnecteException {
-        if (getIn1() == null || getIn2() == null) {
-            throw new NonConnecteException();
+        try {
+            return getIn1().getEtat() && getIn2().getEtat();
+        } catch (NullPointerException e) {
+            throw new NonConnecteException(description(), e);
         }
-        return getIn1().getEtat() && getIn2().getEtat();
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        return this.hashCode();
     }
 
     @Override
     public SignalLogique evaluate() {
-        return getIn1().evaluate().and(getIn2().evaluate());
+        try {
+            return getIn1().evaluate().and(getIn2().evaluate());
+        } catch (NullPointerException e) {
+            return new SignalBas();
+        }
     }
 
 }

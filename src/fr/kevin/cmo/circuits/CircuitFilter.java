@@ -2,8 +2,9 @@ package fr.kevin.cmo.circuits;
 
 import fr.kevin.cmo.composants.Composant;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class CircuitFilter {
 
@@ -14,12 +15,8 @@ public class CircuitFilter {
     }
 
     public List<Composant> filtrerComposants(String nom) {
-        List<Composant> composants = new ArrayList<>();
-        for (Composant composant : composants) {
-            if ((composant.getId().split("@"))[0].compareTo(nom) == 0)
-                composants.add(composant);
-        }
-        return composants;
+        Predicate<Composant> filtre = c -> c.getId().split("@")[0].compareTo(nom) == 0;
+        return circuit.getComposants().stream().filter(filtre).collect(Collectors.toList());
     }
 
 }
