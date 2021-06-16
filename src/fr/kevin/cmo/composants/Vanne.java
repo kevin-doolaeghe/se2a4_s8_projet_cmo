@@ -46,6 +46,16 @@ public class Vanne extends Composant {
     }
 
     @Override
+    public boolean isEntree() {
+        return false;
+    }
+
+    @Override
+    public boolean isSortie() {
+        return true;
+    }
+
+    @Override
     public SignalLogique evaluate() {
         try {
             return in.evaluate();

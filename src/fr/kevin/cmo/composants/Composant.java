@@ -11,6 +11,10 @@ public abstract class Composant implements Comparable, Evaluable {
 
     public abstract boolean getEtat() throws NonConnecteException;
 
+    public abstract boolean isEntree();
+
+    public abstract boolean isSortie();
+
     @Override
     public int compareTo(Object o) {
         return this.hashCode();

@@ -37,6 +37,16 @@ public class Interrupteur extends Composant {
     }
 
     @Override
+    public boolean isEntree() {
+        return true;
+    }
+
+    @Override
+    public boolean isSortie() {
+        return false;
+    }
+
+    @Override
     public SignalLogique evaluate() {
         return etat;
     }

@@ -9,7 +9,6 @@ import fr.kevin.cmo.signaux.SignalBas;
 import fr.kevin.cmo.signaux.SignalLogique;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Circuit implements Evaluable {
 
@@ -25,7 +24,7 @@ public class Circuit implements Evaluable {
     }
 
     public List<String> nomenclature() {
-        return composants.stream().map(c -> c.getId()).collect(Collectors.toList());
+        return new CircuitFilter(this).filtrerId();
     }
 
     public void description() {
@@ -46,13 +45,11 @@ public class Circuit implements Evaluable {
     }
 
     public List<Interrupteur> getInputs() {
-        List<Composant> res = new CircuitFilter(this).filtrerComposants("Interrupteur");
-        return res.stream().map(c -> (Interrupteur) c).collect(Collectors.toList());
+        return new CircuitFilter(this).filtrerEntrees();
     }
 
     public List<Vanne> getOutputs() {
-        List<Composant> res = new CircuitFilter(this).filtrerComposants("Vanne");
-        return res.stream().map(c -> (Vanne) c).collect(Collectors.toList());
+        return new CircuitFilter(this).filtrerSorties();
     }
 
     public String getNom() {
@@ -74,7 +71,7 @@ public class Circuit implements Evaluable {
     @Override
     public SignalLogique evaluate() {
         try {
-            return getOutputs().stream().map(v -> v.evaluate()).collect(Collectors.toList()).get(0);
+            return new CircuitFilter(this).evaluerSignaux().get(0);
         } catch (IndexOutOfBoundsException e) {
             return new SignalBas();
         }
