@@ -1,13 +1,12 @@
 package fr.kevin.cmo.composants;
 
-import fr.kevin.cmo.exception.NonConnecteException;
 import fr.kevin.cmo.signaux.SignalBas;
 import fr.kevin.cmo.signaux.SignalHaut;
 import fr.kevin.cmo.signaux.SignalLogique;
 
 public class Interrupteur extends Composant {
 
-    protected SignalLogique etat;
+    private SignalLogique etat;
 
     public Interrupteur() {
         off();
@@ -19,11 +18,6 @@ public class Interrupteur extends Composant {
 
     public void off() {
         etat = new SignalBas();
-    }
-
-    @Override
-    public String getId() {
-        return "Interrupteur@" + this.hashCode();
     }
 
     @Override

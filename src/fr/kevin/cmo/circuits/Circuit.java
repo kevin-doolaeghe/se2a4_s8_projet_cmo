@@ -27,21 +27,25 @@ public class Circuit implements Evaluable {
         return new CircuitFilter(this).filtrerId();
     }
 
-    public void description() {
+    public void afficherNom() {
         System.out.println(this.nom + ":");
+    }
+
+    public void description() {
+        afficherNom();
         composants.forEach(c -> System.out.println("\t-" + c.description()));
     }
 
     public void traceEtats() {
-        System.out.println(this.nom + ":");
+        afficherNom();
         for (Composant composant : composants) {
-            System.out.print("\t- " + composant.getId() + " ");
+            System.out.print("\t- " + composant.description() + " -> ");
             try {
                 System.out.println(composant.getEtat());
             } catch (NonConnecteException e) {
                 System.out.println("non connecte");
             }
-        }
+        };
     }
 
     public List<Interrupteur> getInputs() {
@@ -69,11 +73,11 @@ public class Circuit implements Evaluable {
     }
 
     @Override
-    public SignalLogique evaluate() {
+    public SignalLogique evaluate() throws NonConnecteException {
         try {
             return new CircuitFilter(this).evaluerSignaux().get(0);
         } catch (IndexOutOfBoundsException e) {
-            return new SignalBas();
+            throw new NonConnecteException("non connecte", e);
         }
     }
 

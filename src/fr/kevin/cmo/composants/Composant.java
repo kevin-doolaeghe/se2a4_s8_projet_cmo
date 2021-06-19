@@ -5,7 +5,9 @@ import fr.kevin.cmo.signaux.Evaluable;
 
 public abstract class Composant implements Comparable, Evaluable {
 
-    public abstract String getId();
+    public String getId() {
+        return getClass().getSimpleName() + "@" + this.hashCode();
+    }
 
     public abstract String description();
 

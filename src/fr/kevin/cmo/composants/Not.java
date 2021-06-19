@@ -1,7 +1,6 @@
 package fr.kevin.cmo.composants;
 
 import fr.kevin.cmo.exception.NonConnecteException;
-import fr.kevin.cmo.signaux.SignalBas;
 import fr.kevin.cmo.signaux.SignalLogique;
 
 public class Not extends Porte {
@@ -23,11 +22,6 @@ public class Not extends Porte {
     }
 
     @Override
-    public String getId() {
-        return "Not@" + this.hashCode();
-    }
-
-    @Override
     public String description() {
         try {
             return getId() + " in: " + getIn().getId();
@@ -46,11 +40,11 @@ public class Not extends Porte {
     }
 
     @Override
-    public SignalLogique evaluate() {
+    public SignalLogique evaluate() throws NonConnecteException {
         try {
             return in.evaluate().not();
         } catch (NullPointerException e) {
-            return new SignalBas();
+            throw new NonConnecteException("non connecte", e);
         }
     }
 

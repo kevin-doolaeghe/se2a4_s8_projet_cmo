@@ -1,7 +1,6 @@
 package fr.kevin.cmo.composants;
 
 import fr.kevin.cmo.exception.NonConnecteException;
-import fr.kevin.cmo.signaux.SignalBas;
 import fr.kevin.cmo.signaux.SignalLogique;
 
 public class Vanne extends Composant {
@@ -20,11 +19,6 @@ public class Vanne extends Composant {
 
     public void setIn(Composant in) {
         this.in = in;
-    }
-
-    @Override
-    public String getId() {
-        return "Vanne@" + this.hashCode();
     }
 
     @Override
@@ -56,11 +50,11 @@ public class Vanne extends Composant {
     }
 
     @Override
-    public SignalLogique evaluate() {
+    public SignalLogique evaluate() throws NonConnecteException {
         try {
             return in.evaluate();
         } catch (NullPointerException e) {
-            return new SignalBas();
+            throw new NonConnecteException("non connecte", e);
         }
     }
 }

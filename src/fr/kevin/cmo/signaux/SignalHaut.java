@@ -13,23 +13,8 @@ public class SignalHaut extends SignalLogique {
     }
 
     @Override
-    public SignalLogique and(SignalLogique s) {
-        if (value() && s.value())
-            return new SignalHaut();
-        else
-            return new SignalBas();
-    }
-
-    @Override
-    public SignalLogique or(SignalLogique s) {
-        if (value() || s.value())
-            return new SignalHaut();
-        else
-            return new SignalBas();
-    }
-
-    @Override
     public String toString() {
         return "True";
     }
+
 }

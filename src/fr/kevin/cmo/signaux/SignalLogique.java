@@ -6,9 +6,19 @@ public abstract class SignalLogique {
 
     public abstract SignalLogique not();
 
-    public abstract SignalLogique and(SignalLogique s);
+    public SignalLogique and(SignalLogique s) {
+        if (value() && s.value())
+            return new SignalHaut();
+        else
+            return new SignalBas();
+    }
 
-    public abstract SignalLogique or(SignalLogique s);
+    public SignalLogique or(SignalLogique s) {
+        if (value() || s.value())
+            return new SignalHaut();
+        else
+            return new SignalBas();
+    }
 
     public abstract String toString();
 
